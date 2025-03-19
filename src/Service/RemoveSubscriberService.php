@@ -5,18 +5,17 @@ namespace App\Service;
 use App\Entity\Subscriber;
 use App\Repository\SubscriberRepository;
 
-class CreateSubscriberService
+class RemoveSubscriberService
 {
     public function __construct(
         private SubscriberRepository $subscriberRepository
     ) {}
 
-    public function create(string $telegramUrl): Subscriber
+    /**
+     * @psalm-param non-empty-string $chatId
+     */
+    public function remove(Subscriber $subscriber): void
     {
-        $subscriber = new Subscriber($telegramUrl);
-
-        $this->subscriberRepository->add($subscriber);
-
-        return $subscriber;
+        $this->subscriberRepository->remove($subscriber);
     }
 }
